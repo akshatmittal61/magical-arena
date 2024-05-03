@@ -4,10 +4,9 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "start": "ts-node --esm index.ts",
-    "dev": "nodemon --esm index.ts"
+    "start": "ts-node index.ts",
+    "dev": "nodemon index.ts"
   },
-  "type": "module",
   "keywords": [],
   "author": "",
   "license": "MIT",
