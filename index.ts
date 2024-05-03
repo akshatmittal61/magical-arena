@@ -1,14 +1,14 @@
-import { TPlayer } from "./player";
-import { cin } from "./utils";
+import Arena from "./arena";
+import Player from "./player";
 
 const init = async () => {
-    const player1: TPlayer = {
-        health: 0,
-        strength: 0,
-        attack: 0
-    }
-    player1.health = +(await cin("Health of player 1: "));
-    console.log("yay! i got it: ", JSON.stringify(player1, null, 2));
+    const player1 = new Player();
+    const player2 = new Player();
+    await player1.create("Player 1");
+    await player2.create("Player 2");
+    
+    const arena = new Arena(player1, player2);
+    arena.play();
 };
 
 init();
