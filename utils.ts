@@ -14,3 +14,7 @@ export const cin = async (question: string = "") => {
     readline.close();
     return answer;
 };
+
+// function to implement a sleep function
+export const sleep = (seconds: number) =>
+    new Promise((resolve) => setTimeout(resolve, seconds * 1000));

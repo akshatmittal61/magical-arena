@@ -4,11 +4,13 @@ class Player {
     public health: number = 0;
     public strength: number = 0;
     public attack: number = 0;
+    public name: string = "";
 
-    public constructor(health: number = 0, strength: number = 0, attack: number = 0) {
+    public constructor(health: number = 0, strength: number = 0, attack: number = 0, name: string = "") {
         this.health = health;
         this.strength = strength;
         this.attack = attack;
+        this.name = name;
     }
 
     setHealth(health: number) {
@@ -27,6 +29,7 @@ class Player {
         this.health = +(await cin(`Enter ${label} health: `));
         this.strength = +(await cin(`Enter ${label} strength: `));
         this.attack = +(await cin(`Enter ${label} attack: `));
+        this.name = label;
     }
 }
 
