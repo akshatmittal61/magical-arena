@@ -6,11 +6,11 @@ class Player {
     public attack: number = 0;
     public name: string = "";
 
-    public constructor(health: number = 0, strength: number = 0, attack: number = 0, name: string = "") {
+    public constructor(name: string = "", health: number = 0, strength: number = 0, attack: number = 0) {
+        this.name = name;
         this.health = health;
         this.strength = strength;
         this.attack = attack;
-        this.name = name;
     }
 
     setHealth(health: number) {
@@ -26,10 +26,10 @@ class Player {
     }
 
     public async create(label: string = "Player") {
-        this.health = +(await cin(`Enter ${label} health: `));
-        this.strength = +(await cin(`Enter ${label} strength: `));
-        this.attack = +(await cin(`Enter ${label} attack: `));
-        this.name = label;
+        this.name = (await cin(`Enter name [${label}]: `)) || label;
+        this.health = +(await cin(`Enter ${this.name || label} health: `));
+        this.strength = +(await cin(`Enter ${this.name || label} strength: `));
+        this.attack = +(await cin(`Enter ${this.name || label} attack: `));
     }
 }
 

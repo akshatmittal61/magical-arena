@@ -2,12 +2,12 @@ import Player from "./player";
 import { random, sleep } from "./utils";
 
 class Arena {
-    public player1: Player = new Player(0, 0, 0);
-    public player2: Player = new Player(0, 0, 0);
+    public player1: Player = new Player();
+    public player2: Player = new Player();
 
     public constructor(player1: Player, player2: Player) {
-        this.player1 = new Player(player1.health, player1.strength, player1.attack, player1.name);
-        this.player2 = new Player(player2.health, player2.strength, player2.attack, player2.name);
+        this.player1 = new Player(player1.name, player1.health, player1.strength, player1.attack);
+        this.player2 = new Player(player2.name, player2.health, player2.strength, player2.attack);
     }
 
     public async play() {
