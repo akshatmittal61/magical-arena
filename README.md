@@ -23,6 +23,10 @@ To setup the application on local, follow these steps:
 - Entering `name` is optional, to skip custom name, leave the field empty, it will default to `Player 1` and `Player 2`.
 - At the end of the game (when `health` of one player becomes 0), the result of the game will be displayed.
 
+# Demo
+
+![Demo](./demo/game.png)
+
 # Directory Structure
 
 ```md
