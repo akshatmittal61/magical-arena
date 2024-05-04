@@ -17,14 +17,6 @@ class Player {
         this.health = health;
     }
 
-    setStrength(strength: number) {
-        this.strength = strength;
-    }
-
-    setAttack(attack: number) {
-        this.attack = attack;
-    }
-
     public async create(label: string = "Player") {
         this.name = (await cin(`Enter name [${label}]: `)) || label;
         this.health = +(await cin(`Enter ${this.name || label} health: `));
