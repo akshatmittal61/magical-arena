@@ -1,16 +1,18 @@
-import { cin } from "./utils";
+import { cin, cinNumber } from "./utils";
 
 class Player {
     public health: number = 0;
     public strength: number = 0;
     public attack: number = 0;
     public name: string = "";
+    public validation: boolean = true;
 
-    public constructor(name: string = "", health: number = 0, strength: number = 0, attack: number = 0) {
+    public constructor(name: string = "", health: number = 0, strength: number = 0, attack: number = 0, validation: boolean = true) {
         this.name = name;
         this.health = health;
         this.strength = strength;
         this.attack = attack;
+        this.validation = validation;
     }
 
     setHealth(health: number) {
@@ -18,10 +20,16 @@ class Player {
     }
 
     public async create(label: string = "Player") {
-        this.name = (await cin(`Enter name [${label}]: `)) || label;
-        this.health = +(await cin(`Enter ${this.name || label} health: `));
-        this.strength = +(await cin(`Enter ${this.name || label} strength: `));
-        this.attack = +(await cin(`Enter ${this.name || label} attack: `));
+        try {
+            this.name = (await cin(`Enter name [${label}]: `)).trim() || label;
+            this.health = +(await cinNumber(`Enter ${this.name || label} health: `));
+            this.strength = +(await cinNumber(`Enter ${this.name || label} strength: `));
+            this.attack = +(await cinNumber(`Enter ${this.name || label} attack: `));
+            this.validation = true;
+        } catch (error) {
+            console.error(error);
+            this.validation = false;
+        }
     }
 }
 

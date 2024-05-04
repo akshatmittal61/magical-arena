@@ -8,7 +8,10 @@ const init = async () => {
     await player2.create("Player 2");
 
     const arena = new Arena(player1, player2);
-    arena.play();
+    const arenaValidation = await arena.play();
+    if (!arenaValidation) {
+        console.error("Something went wrong");
+    }
 };
 
 init();

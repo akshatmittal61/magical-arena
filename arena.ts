@@ -6,13 +6,25 @@ class Arena {
     public player2: Player = new Player();
 
     public constructor(player1: Player, player2: Player) {
-        this.player1 = new Player(player1.name, player1.health, player1.strength, player1.attack);
-        this.player2 = new Player(player2.name, player2.health, player2.strength, player2.attack);
+        this.player1 = new Player(player1.name, player1.health, player1.strength, player1.attack, player1.validation);
+        this.player2 = new Player(player2.name, player2.health, player2.strength, player2.attack, player2.validation);
     }
 
-    public async play() {
+    public validation(): boolean {
+        if (!this.player1.validation) return false;
+        if (!this.player2.validation) return false;
+        if (this.player1.attack === 0 && this.player2.attack === 0) return false;
+        if (this.player1.health === 0 && this.player2.health === 0) return false;
+        return true;
+    }
+
+    public async play(): Promise<boolean> {
+        const arenaValidation = this.validation();
+        if (!arenaValidation) return false;
+
         let attacker = (this.player1.health < this.player2.health) ? this.player1 : this.player2;
         let defender = (attacker === this.player1) ? this.player2 : this.player1;
+
         while (this.player1.health > 0 && this.player2.health > 0) {
             const attackerRoll = this.roll();
             const defenderRoll = this.roll();
@@ -28,6 +40,7 @@ class Arena {
             } else {
                 console.log(`${attacker.name} attacks ${defender.name} with damage ${damage}`);
             }
+
             console.log(`Health of ${attacker.name}: ${attacker.health}`);
             console.log(`Health of ${defender.name}: ${defender.health}`);
             [attacker, defender] = [defender, attacker];
@@ -35,6 +48,7 @@ class Arena {
         }
         const winner = this.player1.health === 0 ? this.player2 : this.player1;
         console.log(`Result: ${winner.name} won the game!`);
+        return true;
     }
 
     public roll() {

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "ts-node index.ts",
     "dev": "nodemon index.ts",
-    "demo": "npm i && ts-node index.ts"
+    "demo": "npm i && ts-node index.ts",
+    "test": "ts-node __tests__/index.ts"
   },
   "keywords": [],
   "author": "",
