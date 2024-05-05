@@ -23,29 +23,39 @@ class Arena {
         let attacker = (this.player1.health < this.player2.health) ? this.player1 : this.player2;
         let defender = (attacker === this.player1) ? this.player2 : this.player1;
 
-        while (this.player1.health > 0 && this.player2.health > 0) {
-            const attackerRoll = this.roll();
-            const defenderRoll = this.roll();
-            let attackDamage = attacker.attack * attackerRoll;
-            let defendDamage = defender.strength * defenderRoll;
-            console.log(`\nRolls: \n${attacker.name}: ${attackerRoll} \n${defender.name}: ${defenderRoll}`);
+        let num = 1;
 
-            let damage = Math.max(0, attackDamage - defendDamage);
+        while (this.player1.health > 0 && this.player2.health > 0) {
+            console.log(`\n-------------------Round ${num}-----------------`);
+            console.log(`Attacker: ${attacker.name} (Health: ${attacker.health})`);
+            console.log(`Defender: ${defender.name} (Health: ${defender.health})`);
+            
+            const attackerDiceOutcome = this.roll();
+            const defenderDiceOutcome = this.roll();
+            
+            let hittingPower = attacker.attack * attackerDiceOutcome;
+            console.log(`\nAttacker <${attacker.name}> rolls the dice to attack defender <${defender.name}> `);
+            console.log(`Dice Outcome: ${attackerDiceOutcome}`);
+            console.log(`Hitting Power: Dice Outcome * attack <${attacker.name}> = ${attackerDiceOutcome}*${attacker.attack} = ${hittingPower}`);
+
+            let defendingPower = defender.strength * defenderDiceOutcome;
+            console.log(`\nDefender <${defender.name}> rolls the dice to defend the attacker <${attacker.name}>`);
+            console.log(`Dice Outcome: ${defenderDiceOutcome}`);
+            console.log(`Defending Power: Dice Outcome * strength <${defender.name}> = ${defenderDiceOutcome}*${defender.strength} = ${defendingPower}`);
+
+            let damage = Math.max(0, hittingPower - defendingPower);
+            console.log(`Damage done by attacker = Hitting Power - Defending Power = ${hittingPower} - ${defendingPower} = ${damage}`);
+
             defender.setHealth(Math.max(0, defender.health - damage));
 
-            if (damage === 0) {
-                console.log(`${defender.name} defends the attack of ${attacker.name} successfully.`);
-            } else {
-                console.log(`${attacker.name} attacks ${defender.name} with damage ${damage}`);
-            }
-
-            console.log(`Health of ${attacker.name}: ${attacker.health}`);
-            console.log(`Health of ${defender.name}: ${defender.health}`);
+            console.log(`Attacker <${attacker.name}> Health: ${attacker.health}`);
+            console.log(`Defender <${defender.name}> Health: ${defender.health}`);
             [attacker, defender] = [defender, attacker];
 
             /* i called sleep method below to make game logs readable at runtime
             else game will terminate and we will have to scroll above to check for logs at each step */
             await sleep(0.5);
+            num = num + 1;
         }
         const winner = this.player1.health === 0 ? this.player2 : this.player1;
         console.log(`Result: ${winner.name} won the game!`);
