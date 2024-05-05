@@ -10,14 +10,14 @@ class Arena {
         this.player2 = new Player(player2.name, player2.health, player2.strength, player2.attack);
     }
 
-    public validation(): boolean {
+    public validateContestants(): boolean {
         if (this.player1.attack === 0 && this.player2.attack === 0) return false;
         if (this.player1.health === 0 && this.player2.health === 0) return false;
         return true;
     }
 
     public async play(): Promise<boolean> {
-        const arenaValidation = this.validation();
+        const arenaValidation = this.validateContestants();
         if (!arenaValidation) return false;
 
         let attacker = (this.player1.health < this.player2.health) ? this.player1 : this.player2;
@@ -42,6 +42,9 @@ class Arena {
             console.log(`Health of ${attacker.name}: ${attacker.health}`);
             console.log(`Health of ${defender.name}: ${defender.health}`);
             [attacker, defender] = [defender, attacker];
+
+            /* i called sleep method below to make game logs readable at runtime
+            else game will terminate and we will have to scroll above to check for logs at each step */
             await sleep(0.5);
         }
         const winner = this.player1.health === 0 ? this.player2 : this.player1;
