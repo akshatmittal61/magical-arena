@@ -6,11 +6,16 @@ export const random = (min: number, max: number) =>
 
 // take input from terminal
 export const cin = async (question: string = "") => {
+    // Create an interface for reading input from the terminal
     const readline = createInterface({
-        input: process.stdin,
-        output: process.stdout
+        input: process.stdin,  // Use standard input stream
+        output: process.stdout // Use standard output stream
     });
+
+    // Ask the user a question and wait for their response
     const answer = await readline.question(question);
+
+    // Close the readline interface after getting the answer
     readline.close();
     return answer;
 };
