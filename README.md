@@ -23,6 +23,23 @@ To setup the application on local, follow these steps:
 - Entering `name` is optional, to skip custom name, leave the field empty, it will default to `Player 1` and `Player 2`.
 - At the end of the game (when `health` of one player becomes 0), the result of the game will be displayed.
 
+# Scripts
+
+- To run the application
+```node
+npm run demo
+```
+
+- To run all the test cases
+```node
+npm run test
+```
+
+- To run the application in development mode
+```node
+npm run dev
+```
+
 # Demo
 
 ![Demo](./demo/game.png)

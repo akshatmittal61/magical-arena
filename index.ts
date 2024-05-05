@@ -4,10 +4,11 @@ import Player from "./player";
 const init = async () => {
     console.log(`---------------Instructions---------------`);
     console.log(`1) Player name will always be of type string. Ex: Sanyam`);
-    console.log(`2) Health, Attack, Strength value will be of type integer. Ex: 100`);
-    console.log(`3) Value of all of these attributes will always be a positive integer`);
-    console.log(`4) Both player did not possess the attack value 0`);
-    console.log(`5) Both player did not possess the health value 0`);
+    console.log(`2) To use the default value, press enter, names will default to 'Player 1' and 'Player 2'`);
+    console.log(`3) Health, Attack, Strength value will be of type integer. Ex: 100`);
+    console.log(`4) Value of all of these attributes will always be a positive integer`);
+    console.log(`5) Both player can not possess the attack value 0`);
+    console.log(`6) Both player can not possess the health value 0`);
 
     const player1 = new Player();
     const player2 = new Player();

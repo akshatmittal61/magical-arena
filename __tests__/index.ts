@@ -3,69 +3,113 @@ import test from "node:test";
 import Player from "../player";
 import Arena from "../arena";
 
-test("One player should end with zero health", async () => {
-    const playerA = new Player("Player A", 100, 6, 12);
-    const playerB = new Player("Player B", 80, 4, 10);
-
-    const arena = new Arena(playerA, playerB);
-    await arena.play();
-
-    assert(arena.player1.health === 0 || arena.player2.health === 0);
-});
-
-test("Should handle strength 0", async () => {
-    const playerA = new Player("Player A", 100, 0, 12);
-    const playerB = new Player("Player B", 80, 0, 10);
-
-    const arena = new Arena(playerA, playerB);
-    await arena.play();
-
-    assert(arena.player1.health === 0 || arena.player2.health === 0);
-});
-
-test("Should handle attack 0", async () => {
+test("Should handle the case when attack of both players is 0", async () => {
     const playerA = new Player("Player A", 100, 10, 0);
     const playerB = new Player("Player B", 80, 10, 0);
 
     const arena = new Arena(playerA, playerB);
-    const arenaResult = await arena.play();
-
-    assert(arenaResult === false);
+    assert(arena.validateContestants() === false);
 });
 
-test("Should handle health 0", async () => {
-    const playerA = new Player("Player A", 0, 10, 0);
-    const playerB = new Player("Player B", 0, 10, 0);
+test("Should handle the case when attack of only one player is 0", async () => {
+    const playerA = new Player("Player A", 100, 10, 4);
+    const playerB = new Player("Player B", 80, 10, 0);
 
     const arena = new Arena(playerA, playerB);
-    const arenaResult = await arena.play();
-
-    assert(arenaResult === false);
+    assert(arena.validateContestants() === true);
 });
 
-test("Should handle equal health", async () => {
-    const playerA = new Player("Player A", 100, 6, 12);
-    const playerB = new Player("Player B", 100, 4, 10);
+test("Should handle the case when attack of both players is greater than 0", async () => {
+    const playerA = new Player("Player A", 100, 10, 4);
+    const playerB = new Player("Player B", 80, 10, 2);
 
     const arena = new Arena(playerA, playerB);
-    await arena.play();
-
-    assert(arena.player1.health === 0 || arena.player2.health === 0);
+    assert(arena.validateContestants() === true);
 });
 
-test("Handle uncaught rejection in entire game", async () => {
-    try {
-        const playerA = new Player("", 0, 0, 0);
-        const playerB = new Player("", 0, 0, 0);
-    
-        await playerA.validateAndFillPlayerDetails("Player 1");
-        await playerB.validateAndFillPlayerDetails("Player 2");
-    
-        const arena = new Arena(playerA, playerB);
-    
-        await arena.play();
-        assert.ok(true);
-    } catch (error) {
-        assert.fail(`${error}`);
-    }
+test("Should handle the case when health of both players is 0", async () => {
+    const playerA = new Player("Player A", 0, 10, 10);
+    const playerB = new Player("Player B", 0, 10, 10);
+
+    const arena = new Arena(playerA, playerB);
+    assert(arena.validateContestants() === false);
+});
+
+test("Should handle the case when health of both players is greater than 0", async () => {
+    const playerA = new Player("Player A", 100, 10, 10);
+    const playerB = new Player("Player B", 100, 10, 10);
+
+    const arena = new Arena(playerA, playerB);
+    assert(arena.validateContestants() === true);
+});
+
+test("Should handle the case when health of only one player is 0", async () => {
+    const playerA = new Player("Player A", 10, 10, 10);
+    const playerB = new Player("Player B", 0, 10, 10);
+
+    const arena = new Arena(playerA, playerB);
+    assert(arena.validateContestants() === true);
+});
+
+test("Should handle the case when value of player health is string like abc", async () => {
+    const playerA = new Player();
+    const health = "abc";
+
+    assert(playerA.validateHealth(health) === false);
+});
+
+test("Should handle the case when value of player health is less than 0", async () => {
+    const playerA = new Player();
+    const health = "-12";
+
+    assert(playerA.validateHealth(health) === false);
+});
+
+test("Should handle the case when value of player health is greater than 0", async () => {
+    const playerA = new Player();
+    const health = "12";
+
+    assert(playerA.validateHealth(health) === true);
+});
+
+test("Should handle the case when value of player attack is string like abc", async () => {
+    const playerA = new Player();
+    const attack = "abc";
+
+    assert(playerA.validateAttack(attack) === false);
+});
+
+test("Should handle the case when value of player attack is less than 0", async () => {
+    const playerA = new Player();
+    const attack = "-10";
+
+    assert(playerA.validateAttack(attack) === false);
+});
+
+test("Should handle the case when value of player attack is greater than 0", async () => {
+    const playerA = new Player();
+    const attack = "10";
+
+    assert(playerA.validateAttack(attack) === true);
+});
+
+test("Should handle the case when value of player strength is string like abc", async () => {
+    const playerA = new Player();
+    const strength = "abc";
+
+    assert(playerA.validateStrength(strength) === false);
+});
+
+test("Should handle the case when value of player strength is less than 0", async () => {
+    const playerA = new Player();
+    const strength = "-10";
+
+    assert(playerA.validateStrength(strength) === false);
+});
+
+test("Should handle the case when value of player strength is greater than 0", async () => {
+    const playerA = new Player();
+    const strength = "10";
+
+    assert(playerA.validateStrength(strength) === true);
 });
