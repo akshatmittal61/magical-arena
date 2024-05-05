@@ -19,11 +19,7 @@ export const cin = async (question: string = "") => {
 export const sleep = (seconds: number) =>
     new Promise((resolve) => setTimeout(resolve, seconds * 1000));
 
-// take number input
-export const cinNumber = async (question: string = ""): Promise<number> => {
-    const answer = await cin(question);
-    if (isNaN(+answer)) {
-        throw `${answer} is not a number`;
-    }
-    return +answer;
-};
+// to check string contains number or not
+export const isNumeric = (str: string): boolean => {
+    return /^\d+$/.test(str);
+}

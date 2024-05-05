@@ -6,13 +6,11 @@ class Arena {
     public player2: Player = new Player();
 
     public constructor(player1: Player, player2: Player) {
-        this.player1 = new Player(player1.name, player1.health, player1.strength, player1.attack, player1.validation);
-        this.player2 = new Player(player2.name, player2.health, player2.strength, player2.attack, player2.validation);
+        this.player1 = new Player(player1.name, player1.health, player1.strength, player1.attack);
+        this.player2 = new Player(player2.name, player2.health, player2.strength, player2.attack);
     }
 
     public validation(): boolean {
-        if (!this.player1.validation) return false;
-        if (!this.player2.validation) return false;
         if (this.player1.attack === 0 && this.player2.attack === 0) return false;
         if (this.player1.health === 0 && this.player2.health === 0) return false;
         return true;

@@ -41,7 +41,7 @@ test("Should handle health 0", async () => {
     const arenaResult = await arena.play();
 
     assert(arenaResult === false);
-}); 
+});
 
 test("Should handle equal health", async () => {
     const playerA = new Player("Player A", 100, 6, 12);
@@ -53,16 +53,19 @@ test("Should handle equal health", async () => {
     assert(arena.player1.health === 0 || arena.player2.health === 0);
 });
 
-test("Handle valid inputs for attributes", async () => {
-    const playerA = new Player("Player A", 100, 6, 12);
-    const playerB = new Player("Player B", 80, 4, 10);
-
-    await playerA.create("Player 1");
-    await playerB.create("Player 2");
-
-    const arena = new Arena(playerA, playerB);
-
-    const arenaResult = await arena.play();
-
-    assert(playerA.validation === true && playerB.validation === true ? arenaResult === true : arenaResult === false);
+test("Handle uncaught rejection in entire game", async () => {
+    try {
+        const playerA = new Player("", 0, 0, 0);
+        const playerB = new Player("", 0, 0, 0);
+    
+        await playerA.validateAndFillPlayerDetails("Player 1");
+        await playerB.validateAndFillPlayerDetails("Player 2");
+    
+        const arena = new Arena(playerA, playerB);
+    
+        await arena.play();
+        assert.ok(true);
+    } catch (error) {
+        assert.fail(`${error}`);
+    }
 });
