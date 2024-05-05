@@ -21,11 +21,7 @@ class Arena {
     }
 
     // Method to start the game
-    public async play(): Promise<boolean> {
-        // Validate contestants before starting the game
-        const arenaValidation = this.validateContestants();
-        if (!arenaValidation) return false;
-
+    public async play(): Promise<Player> {
         // Determine the attacker and defender based on their health
         let attacker = (this.player1.health < this.player2.health) ? this.player1 : this.player2;
         let defender = (attacker === this.player1) ? this.player2 : this.player1;
@@ -37,11 +33,11 @@ class Arena {
             console.log(`\n-------------------Round ${num}-----------------`);
             console.log(`Attacker: ${attacker.name} (Health: ${attacker.health})`);
             console.log(`Defender: ${defender.name} (Health: ${defender.health})`);
-            
+
             // Roll dice outcomes for attacker and defender
             const attackerDiceOutcome = this.roll();
             const defenderDiceOutcome = this.roll();
-            
+
             // Calculate hitting power and defending power
             let hittingPower = attacker.attack * attackerDiceOutcome;
             console.log(`\nAttacker <${attacker.name}> rolls the dice to attack defender <${defender.name}> `);
@@ -62,7 +58,7 @@ class Arena {
 
             console.log(`Attacker <${attacker.name}> Health: ${attacker.health}`);
             console.log(`Defender <${defender.name}> Health: ${defender.health}`);
-            
+
             // Swap attacker and defender for the next round
             [attacker, defender] = [defender, attacker];
 
@@ -70,11 +66,11 @@ class Arena {
             await sleep(0.5);
             num = num + 1;
         }
-        
+
         // Determine the winner of the game
         const winner = this.player1.health === 0 ? this.player2 : this.player1;
         console.log(`Result: ${winner.name} won the game!`);
-        return true;
+        return winner;
     }
 
     // Method to roll a dice

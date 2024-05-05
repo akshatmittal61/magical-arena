@@ -3,6 +3,26 @@ import test from "node:test";
 import Player from "../player";
 import Arena from "../arena";
 
+test("validate business logic functionality", async () => {
+    const playerA = new Player("sam", 30, 4, 8);
+    const playerB = new Player("sumit", 16, 5, 10);
+
+    const arena = new Arena(playerA, playerB);
+    arena.roll = () => 2;
+
+    const winner = await arena.play();
+    assert(winner.name == playerB.name);
+
+    const playerC = new Player("sam", 16, 5, 10);
+    const playerD = new Player("sumit", 30, 4, 8);
+
+    const arena2 = new Arena(playerC, playerD);
+    arena2.roll = () => 2;
+
+    const winner2 = await arena2.play();
+    assert(winner2.name == playerC.name);
+});
+
 test("Should handle the case when attack of both players is 0", async () => {
     const playerA = new Player("Player A", 100, 10, 0);
     const playerB = new Player("Player B", 80, 10, 0);
@@ -113,3 +133,4 @@ test("Should handle the case when value of player strength is greater than 0", a
 
     assert(playerA.validateStrength(strength) === true);
 });
+

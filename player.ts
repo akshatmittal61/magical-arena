@@ -22,31 +22,31 @@ class Player {
     }
 
     // Method to validate the health input
-    validateHealth(health: string): boolean{
-        if(isNumeric(health) && +health >= 0){
+    validateHealth(health: string): boolean {
+        if (isNumeric(health) && +health >= 0) {
             // resolve validateHealth with `true` if the input is an integer and greater than 0
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     // Method to validate the strength input
-    validateStrength(strength: string): boolean{
-        if(isNumeric(strength) && +strength >= 0){
+    validateStrength(strength: string): boolean {
+        if (isNumeric(strength) && +strength >= 0) {
             // resolve validateStrength with `true` if the input is an integer and greater than 0
             return true;
-        }else{
+        } else {
             return false;
         }
     }
 
     // Method to validate the attack input
-    validateAttack(attack: string): boolean{
-        if(isNumeric(attack) && +attack >= 0){
+    validateAttack(attack: string): boolean {
+        if (isNumeric(attack) && +attack >= 0) {
             // resolve validateAttack with `true` if the input is an integer and greater than 0
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -58,27 +58,27 @@ class Player {
 
         // Prompt user to enter player health and validate it
         const healthNum = (await cin(`Enter ${this.name || label} health: `));
-        if(this.validateHealth(healthNum)){
+        if (this.validateHealth(healthNum)) {
             this.health = +healthNum;
-        }else{
+        } else {
             // Resolve with false if health validation fails
             return Promise.resolve(false);
         }
 
         // Prompt user to enter player strength and validate it
         const strengthNum = (await cin(`Enter ${this.name || label} strength: `));
-        if(this.validateHealth(strengthNum)){
+        if (this.validateHealth(strengthNum)) {
             this.strength = +strengthNum;
-        }else{
+        } else {
             // Resolve with false if strength validation fails
             return Promise.resolve(false);
         }
 
         // Prompt user to enter player attack and validate it
         const attackNum = (await cin(`Enter ${this.name || label} attack: `));
-        if(this.validateAttack(attackNum)){
+        if (this.validateAttack(attackNum)) {
             this.attack = +attackNum;
-        }else{
+        } else {
             // Resolve with false if attack validation fails
             return Promise.resolve(false);
         }

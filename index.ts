@@ -36,11 +36,14 @@ const init = async () => {
     const arena = new Arena(player1, player2);
 
     // Start the game and validate the arena
-    const arenaValidation = await arena.play();
-    if (!arenaValidation) {
+    const arenaValidation = arena.validateContestants();
+    if(!arenaValidation){
         // Print an error message if arena validation fails
         console.error("Contestants validation failed, either health or attack of both players is 0, which is not a valid case");
+        process.exit(0);
     }
+
+    await arena.play();
 };
 
 // Call the init function to start the game
